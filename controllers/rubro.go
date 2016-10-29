@@ -3,9 +3,9 @@ package controllers
 import (
 	"encoding/json"
 
-	//models "github.com/miguelramirez93/midApiTitan/models"
+	//models "github.com/miguelramirez93/midApiNix/models"
 
-
+ "fmt"
 
 	"github.com/astaxie/beego"
 )
@@ -21,6 +21,7 @@ func (c *RubroController) URLMapping() {
 	c.Mapping("GetAll", c.GetAll)
 	c.Mapping("Put", c.Put)
 	c.Mapping("Delete", c.Delete)
+	c.Mapping("RegistrarPadre", c.RegistrarPadre)
 }
 
 // @Title Post
@@ -33,9 +34,11 @@ func (this *RubroController) Post() {
 	var v interface{}
 	var respuesta interface{}
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &v); err == nil {
+
 		sendJson("http://"+beego.AppConfig.String("Urlcrud")+":"+beego.AppConfig.String("Portcrud")+"/"+beego.AppConfig.String("Nscrud")+"/rubro","POST",&respuesta ,&v)
 		this.Data["json"] = respuesta
 	} else {
+		fmt.Println("error: ", err )
 		this.Data["json"] = err.Error()
 	}
 	this.ServeJSON()
@@ -159,4 +162,16 @@ func (this *RubroController) Delete() {
 	sendJson("http://"+beego.AppConfig.String("Urlcrud")+":"+beego.AppConfig.String("Portcrud")+"/"+beego.AppConfig.String("Nscrud")+"/rubro/"+id,"DELETE",&respuesta ,nil)
 	this.Data["json"] = respuesta
 	this.ServeJSON()
+}
+func (this *RubroController) RegistrarPadre() {
+	  var v interface{}
+		var respuesta interface{}
+		if err := json.Unmarshal(this.Ctx.Input.RequestBody, &v); err == nil {
+			sendJson("http://"+beego.AppConfig.String("Urlcrud")+":"+beego.AppConfig.String("Portcrud")+"/"+beego.AppConfig.String("Nscrud")+"/rubro_rubro","POST",&respuesta ,&v)
+			this.Data["json"] = respuesta
+			this.ServeJSON()
+		}else{
+			this.Data["json"] = err.Error()
+			this.ServeJSON()
+		}
 }

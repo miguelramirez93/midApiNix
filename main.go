@@ -15,9 +15,10 @@ func main() {
 		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin"},
 		AllowCredentials: true,
 	}))
-	if beego.BConfig.RunMode == "dev" {
+/*	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
-	}
+	}*/
+
 	beego.Run()
 }

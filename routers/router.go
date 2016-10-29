@@ -20,7 +20,11 @@ func init() {
 				&controllers.RubroController{},
 			),
 		),
-
+		beego.NSNamespace("/entidad",
+			beego.NSInclude(
+				&controllers.EntidadController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }
